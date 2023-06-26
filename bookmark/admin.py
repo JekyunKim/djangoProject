@@ -10,6 +10,6 @@ from bookmark.models import Bookmark
 
 # 위에 코드와 아래 @, class랑 동일
 @admin.register(Bookmark)
-class BookAdmin(admin.ModelAdmin):
+class BookmarkAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'url')
 
