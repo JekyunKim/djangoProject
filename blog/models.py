@@ -5,6 +5,7 @@ from taggit.managers import TaggableManager
 
 # Create your models here.
 class Post(models.Model):
+    objects = None
     title = models.CharField(verbose_name='TITLE', max_length=50)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for title alias.')
     description = models.CharField('DESCRIPTION', max_length=100, blank=True, help_text='simple description text.')
