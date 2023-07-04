@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from bookmark.models import Bookmark
@@ -15,16 +16,28 @@ class BookmarkDV(DetailView):
 
 
 class BookmarkCreateView(LoginRequiredMixin, CreateView):
-    pass
+    model = Bookmark
+    fields = ['title', 'url']
+    success_url = reverse_lazy('book:index')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
 
 class BookmarkChangeLV(LoginRequiredMixin, ListView):
-    pass
+    template_name = 'bookmark/bookmark_change_list.html'
+
+    def get_queryset(self):
+        return Bookmark.objects.filter(owner=self.request.user)
 
 
 class BookmarkUpdateView(OwnerOnlyMixin, UpdateView):
-    pass
+    model = Bookmark
+    fields = ['title', 'url']
+    success_url = reverse_lazy('bookmark:index')
 
 
 class BookmarkDeleteView(OwnerOnlyMixin, DeleteView):
-    pass
+    model = Bookmark
+    success_url = reverse_lazy('bookmark:index')
