@@ -42,3 +42,17 @@ class PhotoUV(OwnerOnlyMixin, UpdateView):
 class PhotoDelV(OwnerOnlyMixin, DeleteView):
     model = Photo
     success_url = reverse_lazy('photo:index')
+
+
+class AlbumChangeLV(LoginRequiredMixin, ListView):
+    model = Album
+    template_name = 'photo/album_change_list.html'
+
+    def get_queryset(self):
+        return Album.objects.filter(owner=self.request.user)
+
+
+class AlbumDelV(OwnerOnlyMixin, DeleteView):
+    model = Album
+    success_url = reverse_lazy('photo:index')
+
