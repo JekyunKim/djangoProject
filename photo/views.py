@@ -53,7 +53,7 @@ class AlbumChangeLV(LoginRequiredMixin, ListView):
         return Album.objects.filter(owner=self.request.user)
 
 
-class AlbumDelV(OwnerOnlyMixin, DeleteView):
+class AlbumPhotoDelV(OwnerOnlyMixin, DeleteView):
     model = Album
     success_url = reverse_lazy('photo:index')
 
